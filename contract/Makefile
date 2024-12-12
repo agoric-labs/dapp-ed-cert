@@ -47,4 +47,3 @@ fund: fund-provision-pool
 
 deploy: fund
 	$(DEPLOY_SCRIPT) scripts/init-ed-cert.js
-

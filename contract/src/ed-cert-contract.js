@@ -43,6 +43,14 @@ const contract = async (
 
   const maxCertificates = 1000n;
 
+  const timerService = privateArgs.timerService;
+  const getCurrentTimestamp = async () => {
+    const currentTimestamp = await getCurrentTimestamp();
+    trace('Current Timestamp:', currentTimestamp);
+    return currentTimestamp;
+  };
+
+  
   // Create storage node for certificate data
   const certificateDataRoot = await E(privateArgs.storageNode).makeChildNode(
     'certificates',
@@ -52,6 +60,7 @@ const contract = async (
   const ctx = {
     vowTools: vowTools,
     certificateDataRoot: certificateDataRoot,
+    getCurrentTimestamp: getCurrentTimestamp,
     maxCertificates: maxCertificates,
   };  
 

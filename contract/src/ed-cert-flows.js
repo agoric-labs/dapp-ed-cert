@@ -6,13 +6,14 @@ import { heapVowE as E } from '@agoric/vow/vat.js';
  */
 
 /**
- * Publishes patient data to storage
+ * Publishes certification data to storage
  *
  * @param {Orchestrator} orch
  * @param {{
  *   vowTools: any,
- *   patientDataRoot: any,
- *   maxPatients: bigint
+ *   certificateDataRoot: any,
+ *   getCurrentTimestamp: () => number,
+ *   maxCertificates: bigint
  * }} ctx
  * @param {ZCFSeat} seat
  * @param {{ edCert: object }} offerArgs
@@ -20,7 +21,8 @@ import { heapVowE as E } from '@agoric/vow/vat.js';
 export const publishEdCert = async (orch, ctx, seat, offerArgs) => {
   const { edCert } = offerArgs;
 
-  const { certificateDataRoot, vowTools } = ctx;
+  const { certificateDataRoot, vowTools, getCurrentTimestamp } = ctx;
+  const currentTimestamp = await getCurrentTimestamp();
 
   // Validate data structure
   const requiredFields = [
@@ -69,7 +71,7 @@ export const publishEdCert = async (orch, ctx, seat, offerArgs) => {
     await E(edCertNode).setValue(JSON.stringify(edCert));
 
     seat.exit();
-    return 'Certification data published successfully';
+    return `Certification data published successfully at ${currentTimestamp}`;
   } catch (error) {
     console.error('Error publishing Certification data:', error);
     return harden(new Error('Failed to publish Certification data'));
