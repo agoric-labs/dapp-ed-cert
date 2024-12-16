@@ -44,12 +44,6 @@ const contract = async (
   const maxCertificates = 1000n;
 
   const timerService = privateArgs.timerService;
-  const getCurrentTimestamp = async () => {
-    const currentTimestamp = await getCurrentTimestamp();
-    trace('Current Timestamp:', currentTimestamp);
-    return currentTimestamp;
-  };
-
   
   // Create storage node for certificate data
   const certificateDataRoot = await E(privateArgs.storageNode).makeChildNode(
@@ -60,9 +54,21 @@ const contract = async (
   const ctx = {
     vowTools: vowTools,
     certificateDataRoot: certificateDataRoot,
-    getCurrentTimestamp: getCurrentTimestamp,
+    getCurrentTimestamp() {
+
+      return vowTools.asVow(async () => {
+        const currentTimestamp = await E(timerService).getCurrentTimestamp();
+        trace('Current Timestamp:', currentTimestamp);
+        // Create storage node for certificate data
+        const timeDataRoot = await E(privateArgs.storageNode).makeChildNode('time');
+        const obj = { currentTimestamp: currentTimestamp };
+        const objWithString = { currentTimestamp: obj.currentTimestamp.toString() };
+        await E(timeDataRoot).setValue(JSON.stringify(objWithString));
+        return currentTimestamp;
+      });
+    } ,
     maxCertificates: maxCertificates,
-  };  
+  };
 
   const { publishEdCert } = orchestrateAll(flows, ctx);
 

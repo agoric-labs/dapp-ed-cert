@@ -45,5 +45,5 @@ fund: fund-provision-pool
 	kubectl exec -i agoriclocal-genesis-0 -c validator -- agd tx bank send faucet ${CLIENTADDR} 10000000000000uist -y;
 	make fund-osmo
 
-deploy: fund
+deploy:
 	$(DEPLOY_SCRIPT) scripts/init-ed-cert.js
