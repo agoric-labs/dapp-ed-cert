@@ -1,7 +1,7 @@
 #!/bin/bash
 set -xueo pipefail
 
-cd /workspace/contract
+cd /ws-edcert/contract
 
 SCRIPT=start-ed-cert.js
 PERMIT=start-ed-cert-permit.json
