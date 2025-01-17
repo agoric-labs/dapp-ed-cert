@@ -22,7 +22,7 @@ fi
 # Set paths only if environment variables are not already set
 : ${DAPP_ED_CERT_PATH:="$(pwd)/../dapp-ed-cert"}
 : ${DAPP_CHAIN_TIMER_PATH:="$(pwd)/../dapp-chain-timer"}
-: ${SECOND_INVITE_PATH:="$(pwd)/../second-invite"}
+: ${SECOND_INVITE_PATH:="$(pwd)/../dapp-second-invite"}
 : ${DAPP_OFFER_UP_PATH:="$(pwd)/../dapp-offer-up"}
 : ${DAPP_AGORIC_BASICS_PATH:="$(pwd)/../dapp-agoric-basics"}
 
